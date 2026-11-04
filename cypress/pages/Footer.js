@@ -6,4 +6,8 @@ export class Footer {
     logo() {
         return this.root().find('img[alt*="SuBox"]');
     }
+
+    link(path) {
+        return this.root().find(`nav a[href="${path}"]`);
+    }
 }
