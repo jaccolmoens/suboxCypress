@@ -6,4 +6,9 @@ export class HomePage {
     sections() {
         return cy.get('main section.home-section');
     }
+
+    heroCasesLink() {
+        return   cy.get('.hero-actions a[href="/#escape-koffers"]');
+    }
+
 }

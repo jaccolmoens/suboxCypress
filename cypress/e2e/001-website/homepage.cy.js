@@ -1,14 +1,14 @@
 import { HomePage } from '../../pages/HomePage';
 import { Header } from '../../pages/Header';
 import { Footer } from '../../pages/Footer';
+import { viewports } from '../../support/viewports';
 
-describe('001 - Homepage', () => {
+describe('001 - Homepage', viewports.desktop, () => {
     const home = new HomePage();
     const header = new Header();
     const footer = new Footer();
 
     beforeEach(() => {
-        cy.viewport(1280, 900);
         home.visit();
     });
 
@@ -40,5 +40,14 @@ describe('001 - Homepage', () => {
 
         footer.root().scrollIntoView().should('be.visible');
         footer.logo().should('be.visible');
+    });
+
+    it('CY-001-004 - de hero link opent het kofferaanbod', () => {
+        home.heroCasesLink()
+        .should('be.visible')
+        .click();
+
+        cy.location('hash')
+        .should('eq', '#escape-koffers');
     });
 });
