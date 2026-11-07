@@ -153,8 +153,7 @@ describe("001 - Navigatie", () => {
     });
   });
 
-  it(
-    "CY-001-016 - skiplink brengt toetsenbord gebruikers naar de hoofdinhoud",
+  it("CY-001-016 - skiplink brengt toetsenbord gebruikers naar de hoofdinhoud",
     viewports.desktop,
     () => {
       cy.visit("/");
