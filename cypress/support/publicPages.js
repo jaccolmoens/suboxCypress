@@ -26,7 +26,7 @@ export const publicPages = [
   {
     name: "huuruitleg",
     path: "/uitleg",
-    heading: "Een groot avontuur. In een kleine koffer.",
+    heading: "Zo begint jullie avontuur",
     inFooter: false,
   },
   {
@@ -35,4 +35,10 @@ export const publicPages = [
     heading: "Van Retailer naar ICT\ér met als hobbie.... avonturier\!",
     inFooter: false,
   },
+  {
+    name: "404",
+    path: "/niet-bestaande-pagina",
+    heading: "404 de pagina is niet gevonden.",
+    inFooter: false,
+  }
 ];

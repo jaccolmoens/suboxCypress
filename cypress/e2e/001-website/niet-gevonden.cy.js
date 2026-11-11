@@ -1,12 +1,18 @@
+import { publicPages } from "../../support/publicPages";
+
+const pagina404 = publicPages.find((page) =>
+    page.path === '/niet-bestaande-pagina'
+);
+
 describe('001 - niet gevondenpagina', () => {
     it('CY-001-003 - toont een 404 pagina met een werkende weg naar huis', () => {
         cy.visit('/niet-bestaande-pagina', { failOnStatusCode: false });
         cy.get('main h1')
         .should('have.length', 1)
         .and('be.visible')
-        .and('have.text', 'Deze aanwijzing loopt dood.');
+        .and('have.text', pagina404.heading);
 
-        cy.contains('main a', 'Terug naar SuBox')
+        cy.contains('main a', 'terug naar Subox')
     .should('be.visible')
     .and('have.attr', 'href', '/')
     .click();

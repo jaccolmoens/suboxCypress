@@ -1,11 +1,12 @@
 import { Header } from "../../pages/Header";
 import { viewports } from "../../support/viewports";
+import { publicPages } from "../../support/publicPages";
 
 describe("001 - Navigatie", () => {
   const header = new Header();
-
-  it(
-    "CY-001-005 - opeend het aanbod vanaf een andere route onder het menu",
+      const explenationPAge = publicPages.find((page) => page.path === '/uitleg');
+      
+  it("CY-001-005 - opeend het aanbod vanaf een andere route onder het menu",
     viewports.desktop,
     () => {
       cy.visit("/over-ons");
@@ -70,7 +71,7 @@ describe("001 - Navigatie", () => {
       cy.get("main h1")
         .should("have.length", 1)
         .and("be.visible")
-        .and("have.text", "Een groot avontuur. In een kleine koffer.")
+        .and("have.text", explenationPAge.heading)
         .and("be.focused");
     },
   );

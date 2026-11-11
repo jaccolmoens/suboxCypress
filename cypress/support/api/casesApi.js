@@ -40,15 +40,36 @@ export function updateCase(recordId, version, data) {
     body: data,
   });
 }
+
 export function getAllCases() {
   return apiRequest({
     method: "GET",
     path: "/admin/content",
   });
 }
+
 export function getPublicContent() {
   return apiRequest({
     method: "GET",
     path: "/public/content",
+  });
+}
+
+export function getRentalProfile(recordId) {
+    return apiRequest({
+      method: 'GET',
+      path: `/admin/cases/${recordId}/rental-profile`,
+    });
+}
+
+export function updateRentalProfile(recordId, version, data) {
+  return apiRequest({
+    method: 'PUT',
+    path:  `/admin/cases/${recordId}/rental-profile`,
+    headers: {
+      "If-Match": String(version),
+      "Idempotency-Key": crypto.randomUUID(),
+    },
+    body: data,
   });
 }
