@@ -1,5 +1,7 @@
 import { viewports } from "../../support/viewports";
-
+import { selectRentalPeriod } from "../../support/flows/reservationFlow";
+import { clickNextMonth } from "../../support/flows/reservationFlow";
+import { expectCalendarReady } from "../../support/flows/reservationFlow"
 const calendar = "subox-availability-calendar";
 
 function navigateToTCSDetailPage() {
@@ -8,9 +10,7 @@ function navigateToTCSDetailPage() {
   expectCalendarReady();
 }
 
-function expectCalendarReady() {
-  cy.get('.calendar-column > p[role="status"]').should("not.exist");
-}
+
 
 function addRentalDays(dateText, days) {
   const date = new Date(`${dateText}T12:00:00Z`);
@@ -32,12 +32,7 @@ function openWeekendCalendar() {
 
   navigateToTCSDetailPage();
 
-  cy.contains(".period-options label", "Weekend")
-    .scrollIntoView()
-    .should("be.visible")
-    .find('input[type="radio"]')
-    .check()
-    .should("be.checked");
+  selectRentalPeriod("Weekend");
 
   clickNextMonth();
 
@@ -51,21 +46,8 @@ function openWeekendCalendar() {
   });
 }
 
-function clickNextMonth() {
-  cy.intercept({
-    method: "GET",
-    pathname: "/api/reservations/cases/*/availability",
-    times: 1,
-  }).as("monthAvailability");
-
-  cy.get('button[aria-label="Volgende maand"]')
-    .should("be.visible")
-    .and("be.enabled")
-    .click();
-}
 describe("CY-006 - Reserveringen", () => {
-  it(
-    "CY-006-001 - 1 dag huur heeft dezelfde begin- en einddatum",
+  it("CY-006-001 - 1 dag huur heeft dezelfde begin- en einddatum",
     viewports.desktop,
     () => {
       let selectedDate;
@@ -82,12 +64,7 @@ describe("CY-006 - Reserveringen", () => {
 
       navigateToTCSDetailPage();
 
-      cy.contains(".period-options label", "1 dag")
-        .scrollIntoView()
-        .should("be.visible")
-        .find('input[type="radio"]')
-        .check()
-        .should("be.checked");
+      selectRentalPeriod("1 dag");
 
       // Alleen de nieuwe maandlading krijgt deze alias.
       clickNextMonth();
@@ -164,8 +141,7 @@ describe("CY-006 - Reserveringen", () => {
     },
   );
 
-  it(
-    "CY-006-002 - een weekend begint vrijdag en eindigt zondag",
+  it("CY-006-002 - een weekend begint vrijdag en eindigt zondag",
     viewports.desktop,
     () => {
       let fridayDate;
@@ -252,8 +228,7 @@ describe("CY-006 - Reserveringen", () => {
     },
   );
 
-  it(
-    "CY-006-002 - een maandag geeft uitleg zonder verschuiving naar vrijdag",
+  it("CY-006-002 - een maandag geeft uitleg zonder verschuiving naar vrijdag",
     viewports.desktop,
     () => {
       let mondayDate;
